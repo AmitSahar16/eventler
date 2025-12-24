@@ -1,6 +1,6 @@
 export enum Transportation {
-  BUS = 'bus',
-  CAR = 'car',
-  WALK = 'walk',
-  TRAIN = 'train',
+  BUS = 'BUS',
+  CAR = 'CAR',
+  WALK = 'WALK',
+  TRAIN = 'TRAIN',
 }

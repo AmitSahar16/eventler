@@ -13,4 +13,4 @@ VALUES
 
 -- Sample user preferences
 INSERT INTO user_preferences (user_id, budget, location, event_type_id, transportation)
-VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 100, 'Tel Aviv', 'b3eebc99-9c0b-4ef8-bb6d-6bb9bd380a24', 'bus');
+VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 100, 'Tel Aviv', 'b3eebc99-9c0b-4ef8-bb6d-6bb9bd380a24', 'BUS');

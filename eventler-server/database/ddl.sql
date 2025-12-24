@@ -16,7 +16,7 @@ CREATE TABLE user_preferences (
   budget INTEGER,
   location TEXT,
   event_type_id UUID REFERENCES event_types(id) ON DELETE SET NULL,
-  transportation VARCHAR(10) CHECK (transportation IN ('bus', 'car', 'walk', 'train')),
+  transportation VARCHAR(10) CHECK (transportation IN ('BUS', 'CAR', 'WALK', 'TRAIN')),
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -44,6 +44,7 @@ CREATE TABLE events (
   creator_id UUID REFERENCES users(id) ON DELETE CASCADE,
   group_id UUID REFERENCES groups(id) ON DELETE SET NULL,
   event_type_id UUID REFERENCES event_types(id) ON DELETE SET NULL,
+  process_type VARCHAR(20) NOT NULL CHECK (process_type IN ('INDIVIDUAL', 'GROUP')),
   participant_count INTEGER,
   budget INTEGER,
   location TEXT,

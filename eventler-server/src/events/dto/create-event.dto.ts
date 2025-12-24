@@ -1,4 +1,5 @@
 import {
+  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
@@ -7,30 +8,34 @@ import {
   IsInt,
   Min,
 } from 'class-validator';
+import { ProcessType } from '../enums/process-type.enum';
 
 export class CreateEventDto {
-  @IsUUID()
-  @IsOptional()
-    groupId?: string;
+  @IsEnum(ProcessType)
+  processType: ProcessType;
 
   @IsUUID()
   @IsOptional()
-    eventTypeId?: string;
+  groupId?: string;
+
+  @IsUUID()
+  @IsOptional()
+  eventTypeId?: string;
 
   @IsInt()
   @Min(1)
   @IsOptional()
-    participantCount?: number;
+  participantCount?: number;
 
   @IsDateString()
   @IsOptional()
-    date?: string;
+  date?: string;
 
   @IsString()
   @IsOptional()
-    location?: string;
+  location?: string;
 
   @IsNumber()
   @IsOptional()
-    budget?: number;
+  budget?: number;
 }
