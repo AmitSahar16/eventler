@@ -8,10 +8,8 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS
   app.enableCors();
 
-  // Enable global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -25,4 +23,5 @@ async function bootstrap() {
 
   console.log(`Application is running on: http://localhost:${port}`);
 }
+
 void bootstrap();

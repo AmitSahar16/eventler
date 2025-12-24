@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/event.entity';
 import { EventType } from './entities/event-type.entity';
+import { GroupMember } from '../groups/entities/group-member.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 
@@ -17,6 +18,8 @@ export class EventsService {
     private eventRepository: Repository<Event>,
     @InjectRepository(EventType)
     private eventTypeRepository: Repository<EventType>,
+    @InjectRepository(GroupMember)
+    private groupMemberRepository: Repository<GroupMember>,
   ) { }
 
   async create(userId: string, createEventDto: CreateEventDto) {
@@ -41,10 +44,17 @@ export class EventsService {
       throw new NotFoundException('Event not found');
     }
 
-    // Check if user has access to this event
     if (event.creatorId !== userId && event.groupId) {
-      // TODO: Check if user is a member of the group
-      // For now, we'll allow access
+      const groupMember = await this.groupMemberRepository.findOne({
+        where: {
+          groupId: event.groupId,
+          userId: userId,
+        },
+      });
+
+      if (!groupMember) {
+        throw new ForbiddenException('You do not have access to this event');
+      }
     }
 
     return event;

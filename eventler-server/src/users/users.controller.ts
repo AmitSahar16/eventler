@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @Get('events')
-  getUserEvents() {
-    return this.usersService.getUserEvents();
+  getUserEvents(@Request() req: AuthRequest) {
+    return this.usersService.getUserEvents(req.user.sub);
   }
 }

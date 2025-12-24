@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../auth/entities/user.entity';
 import { UserPreferences } from './entities/user-preferences.entity';
+import { Event } from '../events/entities/event.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 
@@ -13,6 +14,8 @@ export class UsersService {
     private userRepository: Repository<User>,
     @InjectRepository(UserPreferences)
     private preferencesRepository: Repository<UserPreferences>,
+    @InjectRepository(Event)
+    private eventRepository: Repository<Event>,
   ) { }
 
   async getMe(userId: string) {
@@ -82,9 +85,13 @@ export class UsersService {
     return preferences;
   }
 
-  getUserEvents() {
-    // This will be implemented later when events are fully integrated
-    // For now, return an empty array
-    return [];
+  async getUserEvents(userId: string) {
+    const events = await this.eventRepository.find({
+      where: { creatorId: userId },
+      relations: ['eventType', 'group'],
+      order: { createdAt: 'DESC' },
+    });
+
+    return events;
   }
 }

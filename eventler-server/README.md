@@ -206,7 +206,6 @@ npm run start:prod
 - creator_id (FK → users)
 - group_id (FK → groups, nullable)
 - type (SINGLE | GROUP)
-- status (OPEN | CLOSED)
 - budget, location, date
 - created_at
 
@@ -220,7 +219,6 @@ npm run start:prod
 - id (UUID, PK)
 - event_id (FK → events)
 - title, score, rank
-- metadata (JSONB)
 
 ## Authentication
 

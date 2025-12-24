@@ -122,10 +122,16 @@ export class AuthService {
     }
   }
 
-  logout() {
-    // In a real application, you would invalidate the token here
-    // For now, we'll just return a success message
-    return { message: 'Logged out successfully' };
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async logout(refreshToken: string) {
+    // todo: Implement token revocation logic here
+    // 1. Add the token to a blacklist/revoked tokens table
+    // 2. Remove it from a whitelist if you're maintaining one
+    // 3. Clear any server-side session data
+
+    // The client should delete the token on their side
+
+    return { message: 'Logged out successfully', refreshToken };
   }
 
   private generateTokens(user: User) {
