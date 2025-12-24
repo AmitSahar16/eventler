@@ -10,17 +10,17 @@ import { EventStatus } from '../enums/event.enums';
 export class UpdateEventDto {
   @IsEnum(EventStatus)
   @IsOptional()
-  status?: EventStatus;
+    status?: EventStatus;
 
   @IsDateString()
   @IsOptional()
-  date?: string;
+    date?: string;
 
   @IsString()
   @IsOptional()
-  location?: string;
+    location?: string;
 
   @IsNumber()
   @IsOptional()
-  budget?: number;
+    budget?: number;
 }

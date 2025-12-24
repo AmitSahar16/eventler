@@ -11,20 +11,20 @@ import { Type } from 'class-transformer';
 class SlideAnswerItem {
   @IsString()
   @IsNotEmpty()
-  question: string;
+    question: string;
 
   @IsString()
   @IsNotEmpty()
-  answer: string;
+    answer: string;
 
   @IsNumber()
   @IsOptional()
-  weight?: number;
+    weight?: number;
 }
 
 export class CreateSlideAnswersDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => SlideAnswerItem)
-  answers: SlideAnswerItem[];
+    answers: SlideAnswerItem[];
 }

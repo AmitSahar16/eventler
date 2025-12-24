@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/event.entity';
+import { EventType } from './entities/event-type.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventStatus } from './enums/event.enums';
@@ -15,6 +16,8 @@ export class EventsService {
   constructor(
     @InjectRepository(Event)
     private eventRepository: Repository<Event>,
+    @InjectRepository(EventType)
+    private eventTypeRepository: Repository<EventType>,
   ) { }
 
   async create(userId: string, createEventDto: CreateEventDto) {
@@ -108,5 +111,19 @@ export class EventsService {
       eventId: event.id,
       recommendations: [],
     };
+  }
+
+  async getAllEventTypes() {
+    return await this.eventTypeRepository.find();
+  }
+
+  async getEventTypeById(id: string) {
+    const eventType = await this.eventTypeRepository.findOne({ where: { id } });
+
+    if (!eventType) {
+      throw new NotFoundException('Event type not found');
+    }
+
+    return eventType;
   }
 }

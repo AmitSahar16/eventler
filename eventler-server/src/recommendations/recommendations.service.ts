@@ -10,7 +10,7 @@ export class RecommendationsService {
     private recommendationRepository: Repository<Recommendation>,
   ) { }
 
-  async getFeed(userId: string) {
+  getFeed() {
     // This is a stub implementation
     // In production, this would fetch personalized recommendations
     const mockRecommendations = [
@@ -55,7 +55,7 @@ export class RecommendationsService {
     };
   }
 
-  async createForEvent(eventId: string, userId: string) {
+  async createForEvent(eventId: string) {
     // This is a stub implementation
     // In production, this would analyze event data and user preferences
     // to generate personalized recommendations

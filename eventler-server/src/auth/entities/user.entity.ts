@@ -4,23 +4,32 @@ import { UserPreferences } from '../../users/entities/user-preferences.entity';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string;
 
   @Column({ unique: true })
-  email: string;
+    email: string;
 
   @Column({ unique: true })
-  username: string;
+    username: string;
 
   @Column()
-  password: string;
+    password: string;
+
+  @Column({ nullable: true })
+    city: string;
+
+  @Column({ nullable: true })
+    age: number;
+
+  @Column({ nullable: true })
+    occupation: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+    createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+    updatedAt: Date;
 
   @OneToOne(() => UserPreferences, (preferences) => preferences.user)
-  preferences: UserPreferences;
+    preferences: UserPreferences;
 }

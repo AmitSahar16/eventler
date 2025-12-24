@@ -13,6 +13,7 @@ import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import type { AuthRequest } from '../auth/interfaces/auth-request.interface';
 
 @Controller('events')
 @UseGuards(JwtAuthGuard)
@@ -20,18 +21,18 @@ export class EventsController {
   constructor(private readonly eventsService: EventsService) { }
 
   @Post()
-  async create(@Request() req, @Body() createEventDto: CreateEventDto) {
+  async create(@Request() req: AuthRequest, @Body() createEventDto: CreateEventDto) {
     return await this.eventsService.create(req.user.sub, createEventDto);
   }
 
   @Get(':id')
-  async findOne(@Request() req, @Param('id') id: string) {
+  async findOne(@Request() req: AuthRequest, @Param('id') id: string) {
     return await this.eventsService.findOne(id, req.user.sub);
   }
 
   @Put(':id')
   async update(
-    @Request() req,
+    @Request() req: AuthRequest,
     @Param('id') id: string,
     @Body() updateEventDto: UpdateEventDto,
   ) {
@@ -39,17 +40,27 @@ export class EventsController {
   }
 
   @Delete(':id')
-  async remove(@Request() req, @Param('id') id: string) {
+  async remove(@Request() req: AuthRequest, @Param('id') id: string) {
     return await this.eventsService.remove(id, req.user.sub);
   }
 
   @Post('recommendations/:id')
-  async createRecommendations(@Request() req, @Param('id') id: string) {
+  async createRecommendations(@Request() req: AuthRequest, @Param('id') id: string) {
     return await this.eventsService.createRecommendations(id, req.user.sub);
   }
 
   @Get('recommendations/:id')
-  async getRecommendations(@Request() req, @Param('id') id: string) {
+  async getRecommendations(@Request() req: AuthRequest, @Param('id') id: string) {
     return await this.eventsService.getRecommendations(id, req.user.sub);
+  }
+
+  @Get('types/all')
+  async getAllEventTypes() {
+    return await this.eventsService.getAllEventTypes();
+  }
+
+  @Get('types/:id')
+  async getEventTypeById(@Param('id') id: string) {
+    return await this.eventsService.getEventTypeById(id);
   }
 }

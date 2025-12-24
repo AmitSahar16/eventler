@@ -20,7 +20,7 @@ export class AuthService {
   ) { }
 
   async register(registerDto: RegisterDto) {
-    const { email, username, password } = registerDto;
+    const { email, username, password, city, age, occupation } = registerDto;
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
@@ -39,12 +39,15 @@ export class AuthService {
       email,
       username,
       password: hashedPassword,
+      city,
+      age,
+      occupation,
     });
 
     await this.userRepository.save(user);
 
     // Generate tokens
-    const tokens = await this.generateTokens(user);
+    const tokens = this.generateTokens(user);
 
     return {
       user: {
@@ -76,7 +79,7 @@ export class AuthService {
     }
 
     // Generate tokens
-    const tokens = await this.generateTokens(user);
+    const tokens = this.generateTokens(user);
 
     return {
       user: {
@@ -117,37 +120,34 @@ export class AuthService {
         throw new UnauthorizedException('Invalid token');
       }
 
-      const tokens = await this.generateTokens(user);
+      const tokens = this.generateTokens(user);
 
       return tokens;
-    } catch (error) {
-      throw new UnauthorizedException('Invalid refresh token');
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      throw new UnauthorizedException('Invalid refresh token', message);
     }
   }
 
-  async logout() {
+  logout() {
     // In a real application, you would invalidate the token here
     // For now, we'll just return a success message
     return { message: 'Logged out successfully' };
   }
 
-  private async generateTokens(user: User) {
+  private generateTokens(user: User) {
     const payload = {
       sub: user.id,
       email: user.email,
       username: user.username,
     };
 
-    const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload, {
-        secret: process.env.JWT_SECRET,
-        expiresIn: process.env.JWT_EXPIRATION || '1h',
-      }),
-      this.jwtService.signAsync(payload, {
-        secret: process.env.JWT_REFRESH_SECRET,
-        expiresIn: process.env.JWT_REFRESH_EXPIRATION || '7d',
-      }),
-    ]);
+    const accessToken = this.jwtService.sign(payload);
+
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_REFRESH_SECRET || 'default-refresh-secret',
+      expiresIn: (process.env.JWT_REFRESH_EXPIRATION || '7d') as any,
+    });
 
     return {
       accessToken,

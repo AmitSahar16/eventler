@@ -8,48 +8,59 @@ import {
 } from 'typeorm';
 import { User } from '../../auth/entities/user.entity';
 import { Group } from '../../groups/entities/group.entity';
-import { EventType, EventStatus } from '../enums/event.enums';
+import { EventType as EventTypeEnum, EventStatus } from '../enums/event.enums';
+import { EventType } from './event-type.entity';
 
 @Entity('events')
 export class Event {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string;
 
   @Column({ name: 'creator_id' })
-  creatorId: string;
+    creatorId: string;
 
   @Column({ name: 'group_id', nullable: true })
-  groupId: string;
+    groupId: string;
+
+  @Column({ name: 'event_type_id', nullable: true })
+    eventTypeId: string;
 
   @Column({
     type: 'varchar',
     length: 50,
   })
-  type: EventType;
+    type: EventTypeEnum;
 
   @Column({
     type: 'varchar',
     length: 50,
   })
-  status: EventStatus;
+    status: EventStatus;
+
+  @Column({ name: 'participant_count', nullable: true })
+    participantCount: number;
 
   @Column({ nullable: true })
-  budget: number;
+    budget: number;
 
   @Column({ nullable: true })
-  location: string;
+    location: string;
 
   @Column({ nullable: true })
-  date: Date;
+    date: Date;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+    createdAt: Date;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'creator_id' })
-  creator: User;
+    creator: User;
 
   @ManyToOne(() => Group, { nullable: true })
   @JoinColumn({ name: 'group_id' })
-  group: Group;
+    group: Group;
+
+  @ManyToOne(() => EventType, { nullable: true })
+  @JoinColumn({ name: 'event_type_id' })
+    eventType: EventType;
 }

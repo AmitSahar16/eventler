@@ -25,13 +25,12 @@ export class GroupsService {
 
     const group = this.groupRepository.create({
       ...createGroupDto,
-      ownerId: userId,
       inviteLink,
     });
 
     await this.groupRepository.save(group);
 
-    // Add owner as a member
+    // Add creator as the first member
     const member = this.groupMemberRepository.create({
       groupId: group.id,
       userId,
@@ -73,14 +72,20 @@ export class GroupsService {
   }
 
   async update(id: string, userId: string, updateGroupDto: UpdateGroupDto) {
-    const group = await this.groupRepository.findOne({ where: { id } });
+    const group = await this.groupRepository.findOne({
+      where: { id },
+      relations: ['members'],
+    });
 
     if (!group) {
       throw new NotFoundException('Group not found');
     }
 
-    if (group.ownerId !== userId) {
-      throw new ForbiddenException('Only the owner can update the group');
+    // Check if user is a member of the group
+    const isMember = group.members.some((member) => member.userId === userId);
+
+    if (!isMember) {
+      throw new ForbiddenException('Only group members can update the group');
     }
 
     Object.assign(group, updateGroupDto);

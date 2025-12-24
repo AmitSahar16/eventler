@@ -3,21 +3,21 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 export class UpdatePreferencesDto {
   @IsNumber()
   @IsOptional()
-  budget?: number;
+    budget?: number;
 
   @IsString()
   @IsOptional()
-  location?: string;
+    location?: string;
 
   @IsString()
   @IsOptional()
-  eventType?: string;
+    eventType?: string;
 
   @IsString()
   @IsOptional()
-  atmosphere?: string;
+    atmosphere?: string;
 
   @IsString()
   @IsOptional()
-  transportation?: string;
+    transportation?: string;
 }

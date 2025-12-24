@@ -11,28 +11,28 @@ import { User } from '../../auth/entities/user.entity';
 @Entity('slide_answers')
 export class SlideAnswer {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string;
 
   @Column({ name: 'event_id' })
-  eventId: string;
+    eventId: string;
 
   @Column({ name: 'user_id' })
-  userId: string;
+    userId: string;
 
   @Column()
-  question: string;
+    question: string;
 
   @Column()
-  answer: string;
+    answer: string;
 
   @Column({ nullable: true })
-  weight: number;
+    weight: number;
 
   @ManyToOne(() => Event)
   @JoinColumn({ name: 'event_id' })
-  event: Event;
+    event: Event;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+    user: User;
 }

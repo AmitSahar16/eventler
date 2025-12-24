@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SlideAnswer } from './entities/slide-answer.entity';
@@ -11,7 +11,7 @@ export class SlidesService {
     private slideAnswerRepository: Repository<SlideAnswer>,
   ) { }
 
-  async getSlides() {
+  getSlides() {
     // This would typically return slide questions/templates
     // For now, return a sample structure
     return {

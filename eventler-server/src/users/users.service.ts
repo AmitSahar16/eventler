@@ -82,7 +82,7 @@ export class UsersService {
     return preferences;
   }
 
-  async getUserEvents(userId: string) {
+  getUserEvents() {
     // This will be implemented later when events are fully integrated
     // For now, return an empty array
     return [];

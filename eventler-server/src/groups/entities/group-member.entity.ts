@@ -11,19 +11,19 @@ import { User } from '../../auth/entities/user.entity';
 @Entity('group_members')
 export class GroupMember {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string;
 
   @Column({ name: 'group_id' })
-  groupId: string;
+    groupId: string;
 
   @Column({ name: 'user_id' })
-  userId: string;
+    userId: string;
 
   @ManyToOne(() => Group, (group) => group.members)
   @JoinColumn({ name: 'group_id' })
-  group: Group;
+    group: Group;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+    user: User;
 }

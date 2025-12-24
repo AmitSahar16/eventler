@@ -4,7 +4,6 @@ import {
   Post,
   Param,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { RecommendationsService } from './recommendations.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -17,15 +16,12 @@ export class RecommendationsController {
   ) { }
 
   @Get('feed')
-  async getFeed(@Request() req) {
-    return await this.recommendationsService.getFeed(req.user.sub);
+  getFeed() {
+    return this.recommendationsService.getFeed();
   }
 
   @Post('events/:eventId')
-  async createForEvent(@Request() req, @Param('eventId') eventId: string) {
-    return await this.recommendationsService.createForEvent(
-      eventId,
-      req.user.sub,
-    );
+  async createForEvent(@Param('eventId') eventId: string) {
+    return await this.recommendationsService.createForEvent(eventId);
   }
 }

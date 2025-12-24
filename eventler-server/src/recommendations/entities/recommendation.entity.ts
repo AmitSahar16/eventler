@@ -10,24 +10,24 @@ import { Event } from '../../events/entities/event.entity';
 @Entity('recommendations')
 export class Recommendation {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string;
 
   @Column({ name: 'event_id' })
-  eventId: string;
+    eventId: string;
 
   @Column()
-  title: string;
+    title: string;
 
   @Column({ type: 'decimal', nullable: true })
-  score: number;
+    score: number;
 
   @Column({ nullable: true })
-  rank: number;
+    rank: number;
 
   @Column({ type: 'jsonb', nullable: true })
-  metadata: any;
+    metadata: any;
 
   @ManyToOne(() => Event)
   @JoinColumn({ name: 'event_id' })
-  event: Event;
+    event: Event;
 }
