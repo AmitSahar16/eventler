@@ -12,30 +12,30 @@ import { ProcessType } from '../enums/process-type.enum';
 
 export class CreateEventDto {
   @IsEnum(ProcessType)
-  processType: ProcessType;
+    processType: ProcessType;
 
   @IsUUID()
   @IsOptional()
-  groupId?: string;
+    groupId?: string;
 
   @IsUUID()
   @IsOptional()
-  eventTypeId?: string;
+    eventTypeId?: string;
 
   @IsInt()
   @Min(1)
   @IsOptional()
-  participantCount?: number;
+    participantCount?: number;
 
   @IsDateString()
   @IsOptional()
-  date?: string;
+    date?: string;
 
   @IsString()
   @IsOptional()
-  location?: string;
+    location?: string;
 
   @IsNumber()
   @IsOptional()
-  budget?: number;
+    budget?: number;
 }

@@ -22,7 +22,6 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     const { email, username, password, city, age, occupation } = registerDto;
 
-    // Check if user already exists
     const existingUser = await this.userRepository.findOne({
       where: [{ email }, { username }],
     });
@@ -31,10 +30,8 @@ export class AuthService {
       throw new ConflictException('Email or username already exists');
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = this.userRepository.create({
       email,
       username,
@@ -46,7 +43,6 @@ export class AuthService {
 
     await this.userRepository.save(user);
 
-    // Generate tokens
     const tokens = this.generateTokens(user);
 
     return {
@@ -62,7 +58,6 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const { identifier, password } = loginDto;
 
-    // Find user by email or username
     const user = await this.userRepository.findOne({
       where: [{ email: identifier }, { username: identifier }],
     });
@@ -71,14 +66,12 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Generate tokens
     const tokens = this.generateTokens(user);
 
     return {

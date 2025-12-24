@@ -30,7 +30,6 @@ export class GroupsService {
 
     await this.groupRepository.save(group);
 
-    // Add creator as the first member
     const member = this.groupMemberRepository.create({
       groupId: group.id,
       userId,
@@ -61,7 +60,6 @@ export class GroupsService {
       throw new NotFoundException('Group not found');
     }
 
-    // Check if user is a member
     const isMember = group.members.some((member) => member.userId === userId);
 
     if (!isMember) {
@@ -81,7 +79,6 @@ export class GroupsService {
       throw new NotFoundException('Group not found');
     }
 
-    // Check if user is a member of the group
     const isMember = group.members.some((member) => member.userId === userId);
 
     if (!isMember) {

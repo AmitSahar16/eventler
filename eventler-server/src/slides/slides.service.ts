@@ -18,7 +18,6 @@ export class SlidesService {
       slides: [
         { question: 'What is your preferred budget?', type: 'number' },
         { question: 'What type of event do you prefer?', type: 'choice' },
-        { question: 'What atmosphere are you looking for?', type: 'choice' },
         { question: 'Preferred location?', type: 'text' },
         { question: 'Transportation preference?', type: 'choice' },
       ],
@@ -30,13 +29,6 @@ export class SlidesService {
     userId: string,
     createSlideAnswersDto: CreateSlideAnswersDto,
   ) {
-    // Delete existing answers for this user and event
-    await this.slideAnswerRepository.delete({
-      eventId,
-      userId,
-    });
-
-    // Create new answers
     const answers = createSlideAnswersDto.answers.map((answer) =>
       this.slideAnswerRepository.create({
         eventId,
