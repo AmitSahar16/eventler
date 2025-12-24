@@ -1,5 +1,4 @@
 import {
-  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
@@ -8,12 +7,8 @@ import {
   IsInt,
   Min,
 } from 'class-validator';
-import { EventType } from '../enums/event.enums';
 
 export class CreateEventDto {
-  @IsEnum(EventType)
-    type: EventType;
-
   @IsUUID()
   @IsOptional()
     groupId?: string;

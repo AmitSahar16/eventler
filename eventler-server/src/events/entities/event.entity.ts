@@ -8,7 +8,6 @@ import {
 } from 'typeorm';
 import { User } from '../../auth/entities/user.entity';
 import { Group } from '../../groups/entities/group.entity';
-import { EventType as EventTypeEnum, EventStatus } from '../enums/event.enums';
 import { EventType } from './event-type.entity';
 
 @Entity('events')
@@ -24,18 +23,6 @@ export class Event {
 
   @Column({ name: 'event_type_id', nullable: true })
     eventTypeId: string;
-
-  @Column({
-    type: 'varchar',
-    length: 50,
-  })
-    type: EventTypeEnum;
-
-  @Column({
-    type: 'varchar',
-    length: 50,
-  })
-    status: EventStatus;
 
   @Column({ name: 'participant_count', nullable: true })
     participantCount: number;

@@ -9,7 +9,6 @@ import { Event } from './entities/event.entity';
 import { EventType } from './entities/event-type.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { EventStatus } from './enums/event.enums';
 
 @Injectable()
 export class EventsService {
@@ -24,7 +23,6 @@ export class EventsService {
     const event = this.eventRepository.create({
       ...createEventDto,
       creatorId: userId,
-      status: EventStatus.OPEN,
       date: createEventDto.date ? new Date(createEventDto.date) : undefined,
     });
 

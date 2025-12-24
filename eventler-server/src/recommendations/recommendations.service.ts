@@ -19,33 +19,18 @@ export class RecommendationsService {
         title: 'Coffee Shop Meet-up',
         score: 0.95,
         rank: 1,
-        metadata: {
-          location: 'Downtown',
-          price: '$$',
-          type: 'cafe',
-        },
       },
       {
         id: '2',
         title: 'Beach Volleyball',
         score: 0.88,
         rank: 2,
-        metadata: {
-          location: 'Beach',
-          price: 'Free',
-          type: 'sports',
-        },
       },
       {
         id: '3',
         title: 'Movie Night',
         score: 0.82,
         rank: 3,
-        metadata: {
-          location: 'Cinema',
-          price: '$$$',
-          type: 'entertainment',
-        },
       },
     ];
 
@@ -70,33 +55,18 @@ export class RecommendationsService {
         title: 'Italian Restaurant',
         score: 0.92,
         rank: 1,
-        metadata: {
-          cuisine: 'Italian',
-          priceRange: '$$',
-          rating: 4.5,
-        },
       },
       {
         eventId,
         title: 'Rooftop Bar',
         score: 0.87,
         rank: 2,
-        metadata: {
-          type: 'bar',
-          priceRange: '$$$',
-          rating: 4.3,
-        },
       },
       {
         eventId,
         title: 'Escape Room',
         score: 0.81,
         rank: 3,
-        metadata: {
-          type: 'activity',
-          priceRange: '$$',
-          rating: 4.7,
-        },
       },
     ];
 

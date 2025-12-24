@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   JoinColumn,
   OneToOne,
+  ManyToOne,
 } from 'typeorm';
 import { User } from '../../auth/entities/user.entity';
+import { EventType } from '../../events/entities/event-type.entity';
+import { Transportation } from '../enums/transportation.enum';
 
 @Entity('user_preferences')
 export class UserPreferences {
@@ -22,14 +25,11 @@ export class UserPreferences {
   @Column({ nullable: true })
     location: string;
 
-  @Column({ name: 'event_type', nullable: true })
-    eventType: string;
+  @Column({ name: 'event_type_id', nullable: true })
+    eventTypeId: string;
 
-  @Column({ nullable: true })
-    atmosphere: string;
-
-  @Column({ nullable: true })
-    transportation: string;
+  @Column({ type: 'varchar', length: 10, nullable: true })
+    transportation: Transportation;
 
   @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
@@ -37,4 +37,8 @@ export class UserPreferences {
   @OneToOne(() => User, (user) => user.preferences)
   @JoinColumn({ name: 'user_id' })
     user: User;
+
+  @ManyToOne(() => EventType, { nullable: true })
+  @JoinColumn({ name: 'event_type_id' })
+    eventType: EventType;
 }

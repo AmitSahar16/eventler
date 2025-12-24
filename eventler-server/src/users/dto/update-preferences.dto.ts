@@ -1,4 +1,5 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import { Transportation } from '../enums/transportation.enum';
 
 export class UpdatePreferencesDto {
   @IsNumber()
@@ -9,15 +10,11 @@ export class UpdatePreferencesDto {
   @IsOptional()
     location?: string;
 
-  @IsString()
+  @IsUUID()
   @IsOptional()
-    eventType?: string;
+    eventTypeId?: string;
 
-  @IsString()
+  @IsEnum(Transportation)
   @IsOptional()
-    atmosphere?: string;
-
-  @IsString()
-  @IsOptional()
-    transportation?: string;
+    transportation?: Transportation;
 }

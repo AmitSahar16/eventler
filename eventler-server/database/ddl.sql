@@ -15,16 +15,14 @@ CREATE TABLE user_preferences (
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   budget INTEGER,
   location TEXT,
-  event_type TEXT,
-  atmosphere TEXT,
-  transportation TEXT,
+  event_type_id UUID REFERENCES event_types(id) ON DELETE SET NULL,
+  transportation VARCHAR(10) CHECK (transportation IN ('bus', 'car', 'walk', 'train')),
   created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE event_types (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(100) UNIQUE NOT NULL,
-  description TEXT,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -46,8 +44,6 @@ CREATE TABLE events (
   creator_id UUID REFERENCES users(id) ON DELETE CASCADE,
   group_id UUID REFERENCES groups(id) ON DELETE SET NULL,
   event_type_id UUID REFERENCES event_types(id) ON DELETE SET NULL,
-  type VARCHAR(50) NOT NULL,
-  status VARCHAR(50) NOT NULL,
   participant_count INTEGER,
   budget INTEGER,
   location TEXT,
@@ -69,6 +65,5 @@ CREATE TABLE recommendations (
   event_id UUID REFERENCES events(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   score DECIMAL,
-  rank INTEGER,
-  metadata JSONB
+  rank INTEGER
 );

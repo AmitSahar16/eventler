@@ -24,9 +24,6 @@ export class Recommendation {
   @Column({ nullable: true })
     rank: number;
 
-  @Column({ type: 'jsonb', nullable: true })
-    metadata: any;
-
   @ManyToOne(() => Event)
   @JoinColumn({ name: 'event_id' })
     event: Event;
